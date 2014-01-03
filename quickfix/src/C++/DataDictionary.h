@@ -33,6 +33,7 @@
 #include <set>
 #include <map>
 #include <string.h>
+#include <iostream>
 
 namespace FIX
 {
@@ -212,6 +213,28 @@ public:
   {
     FieldToValue::const_iterator i = m_fieldValues.find( field );
     return i != m_fieldValues.end();
+  }
+
+  void DEBUG_fieldValues(int field) const
+  {
+     FieldToValue::const_iterator i = m_fieldValues.find( field );
+     if (i == m_fieldValues.end()) return;
+     std::cerr << "[ ";
+     for (Values::const_iterator j = i->second.begin(); j != i->second.end(); j++) {
+       std::cerr << *j << " ";
+     }
+     std::cerr << "]" << std::endl;
+  }
+
+  void DEBUG_messageFields(const std::string &msgType)
+  {
+    MsgTypeToField::const_iterator i = m_messageFields.find(msgType);
+    if (i == m_messageFields.end()) return;
+    std::cerr << "[ ";
+    for (MsgFields::const_iterator j = i->second.begin(); j != i->second.end(); j++) {
+       std::cerr << *j << " ";
+    }
+    std::cerr << "]" << std::endl;
   }
 
   bool isFieldValue( int field, const std::string& value ) const
@@ -407,9 +430,13 @@ private:
     if ( !hasFieldValue( field.getField() ) ) return ;
 
     const std::string& value = field.getString();
-    if ( !isFieldValue( field.getField(), value ) )
-      throw IncorrectTagValue( field.getField() );
-  }
+    if ( !isFieldValue( field.getField(), value ) ) {
+      //throw IncorrectTagValue( field.getField() );
+      std::cerr << "******* DataDictionary::checkValue: Incorrect Tag Value: field: " << field.getField() << ", value: " << value << std::endl;
+      std::cerr << "******* DataDictionary::checkValue: Incorrect Tag Value: available values: "; 
+      DEBUG_fieldValues(field.getField());
+    }  
+   }
 
   /// Check if a field has a value.
   void checkHasValue( const FieldBase& field ) const

@@ -2,6 +2,9 @@
 #define FIX50SP1_SECURITYLIST_H
 
 #include "Message.h"
+/*
+ * 55,65,48,22,460,461,167,762,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,947,206,231,223,207,106,348,349,107,350,351,691,667,875,876,873,874,965,966,1049,967,968,969,970,971,996,997,1079,1151,1146,1147,1227,1191,1192,1193,1194,1195,1196,1198,1199,1200,201,1244,1242,1197,668,869,913,914,915,918,788,916,917,919,898,711,15,232,555,218,220,221,222,662,663,699,761,235,236,701,696,697,698,58,354,355,1201
+ */
 
 namespace FIX50SP1
 {
@@ -18,17 +21,30 @@ namespace FIX50SP1
     FIELD_SET(*this, FIX::SecurityReqID);
     FIELD_SET(*this, FIX::SecurityResponseID);
     FIELD_SET(*this, FIX::SecurityRequestResult);
+    FIELD_SET(*this, FIX::SecurityReportID);
     FIELD_SET(*this, FIX::TotNoRelatedSym);
+    FIELD_SET(*this, FIX::MarketID);
+    FIELD_SET(*this, FIX::MarketSegmentID);
     FIELD_SET(*this, FIX::LastFragment);
     FIELD_SET(*this, FIX::NoRelatedSym);
     class NoRelatedSym: public FIX::Group
     {
     public:
-    NoRelatedSym() : FIX::Group(146,55,FIX::message_order(55,65,48,22,460,461,167,762,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,947,206,231,223,207,106,348,349,107,350,351,691,667,875,876,873,874,965,966,1049,967,968,969,970,971,996,997,1079,1151,1146,1147,1227,1191,1192,1193,1194,1195,1196,1198,1199,1200,201,1244,1242,1197,668,869,913,914,915,918,788,916,917,919,898,711,15,232,555,218,220,221,222,662,663,699,761,235,236,701,696,697,698,58,354,355,1201,0)) {}
+    NoRelatedSym() : FIX::Group(146,48,FIX::message_order(48,22,55,65,454,460,461,167,762,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,947,206,231,223,207,106,348,349,107,350,351,691,667,875,876,873,874,965,966,1049,967,968,969,970,971,996,997,1079,1151,1146,1147,1227,1191,1192,1193,1194,1195,1196,1198,1199,1200,201,1244,1242,1197,668,869,913,914,915,918,788,916,917,919,898,711,15,1150,232,555,218,220,221,222,662,663,699,761,235,236,701,696,697,698,58,354,355,1201,0)) {} 
       FIELD_SET(*this, FIX::Symbol);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);
       FIELD_SET(*this, FIX::SecurityIDSource);
+      FIELD_SET(*this,FIX::NoSecurityAltID);
+
+      class NoSecurityAltID: public FIX::Group
+      {
+        public:
+        NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)){}
+        FIELD_SET(*this,FIX::SecurityAltID);
+        FIELD_SET(*this,FIX::SecurityAltIDSource);
+      };
+
       FIELD_SET(*this, FIX::Product);
       FIELD_SET(*this, FIX::CFICode);
       FIELD_SET(*this, FIX::SecurityType);
@@ -104,6 +120,8 @@ namespace FIX50SP1
       FIELD_SET(*this, FIX::EndDate);
       FIELD_SET(*this, FIX::DeliveryType);
       FIELD_SET(*this, FIX::MarginRatio);
+      FIELD_SET(*this, FIX::TradingReferencePrice);
+
       FIELD_SET(*this, FIX::NoUnderlyings);
       class NoUnderlyings: public FIX::Group
       {
@@ -293,10 +311,7 @@ namespace FIX50SP1
         };
       };
     };
-    FIELD_SET(*this, FIX::SecurityReportID);
     FIELD_SET(*this, FIX::ClearingBusinessDate);
-    FIELD_SET(*this, FIX::MarketID);
-    FIELD_SET(*this, FIX::MarketSegmentID);
     FIELD_SET(*this, FIX::ApplID);
     FIELD_SET(*this, FIX::ApplSeqNum);
     FIELD_SET(*this, FIX::ApplLastSeqNum);

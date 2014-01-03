@@ -215,7 +215,7 @@ namespace FIX50SP1
     class NoMDEntries: public FIX::Group
     {
     public:
-    NoMDEntries() : FIX::Group(268,269,FIX::message_order(269,270,15,271,272,273,274,275,336,625,276,277,282,283,284,286,59,432,126,110,18,287,37,299,288,289,346,290,546,811,58,354,355,1023,528,1024,332,333,1020,63,64,1070,83,1048,1026,1027,278,453,198,40,423,235,236,701,696,697,698,218,220,221,222,662,663,699,761,1177,1093,326,327,0)) {}
+    NoMDEntries() : FIX::Group(268,269,FIX::message_order(269,270,15,271,272,273,274,275,336,625,276,277,282,283,284,286,59,432,126,110,18,287,37,299,288,289,346,290,546,811,58,354,355,1023,528,1024,332,333,1020,63,64,1070,83,1048,1026,1027,278,453,198,40,423,235,236,701,696,697,698,218,220,221,222,662,663,699,761,1177,1093,326,327,828,310,0)) {}
       FIELD_SET(*this, FIX::MDEntryType);
       FIELD_SET(*this, FIX::MDEntryPx);
       FIELD_SET(*this, FIX::Currency);
@@ -308,6 +308,8 @@ namespace FIX50SP1
       FIELD_SET(*this, FIX::LotType);
       FIELD_SET(*this, FIX::SecurityTradingStatus);
       FIELD_SET(*this, FIX::HaltReasonChar);
+      FIELD_SET(*this, FIX::TrdType);
+      FIELD_SET(*this, FIX::LastPx);
     };
     FIELD_SET(*this, FIX::ApplQueueDepth);
     FIELD_SET(*this, FIX::ApplQueueResolution);

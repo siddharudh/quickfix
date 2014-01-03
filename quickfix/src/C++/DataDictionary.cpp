@@ -56,6 +56,7 @@ throw( ConfigError )
   m_checkFieldsHaveValues( true ), m_checkUserDefinedFields( true ),
   m_orderedFieldsArray(0)
 {
+  std::cerr << "***** DataDictionary::DataDictionary( std::istream& stream )" << std::endl;
   readFromStream( stream );
 }
 
@@ -65,16 +66,19 @@ throw( ConfigError )
   m_checkFieldsHaveValues( true ), m_checkUserDefinedFields( true ),
   m_orderedFieldsArray(0)
 {
+  std::cerr << "***** DataDictionary::DataDictionary( const std::string& url ): url: " << url << std::endl;
   readFromURL( url );
 }
 
 DataDictionary::DataDictionary( const DataDictionary& copy )
 {
+  // std::cerr << "***** DataDictionary::DataDictionary( const DataDictionary& copy )" << std::endl;
   *this = copy;
 }
 
 DataDictionary::~DataDictionary()
 {
+   // std::cerr << "***** DataDictionary::~DataDictionary()" << std::endl;
   FieldToGroup::iterator i;
   for ( i = m_groups.begin(); i != m_groups.end(); ++i )
     delete i->second.second;
@@ -110,6 +114,9 @@ DataDictionary& DataDictionary::operator=( const DataDictionary& rhs )
     addGroup( i->first.first, i->first.second,
               i->second.first, *i->second.second );
   }
+
+  DEBUG_messageFields("y");
+
   return *this;
 
   QF_STACK_POP
@@ -162,8 +169,8 @@ void DataDictionary::iterate( const FieldMap& map, const MsgType& msgType ) cons
 { QF_STACK_PUSH(DataDictionary::iterate)
 
   int lastField = 0;
-
   FieldMap::iterator i;
+
   for ( i = map.begin(); i != map.end(); ++i )
   {
     const FieldBase& field = i->second;
@@ -532,6 +539,7 @@ int DataDictionary::addXMLComponentFields( DOMDocument* pDoc, DOMNode* pNode,
 
       DD.addField(field);
       DD.addMsgField(msgtype, field);
+      //this->addMsgField(msgtype,field); 
     }
     if(pComponentFieldNode->getName() == "component")
     {
@@ -540,7 +548,7 @@ int DataDictionary::addXMLComponentFields( DOMDocument* pDoc, DOMNode* pNode,
       attrs->get("required", required);
       bool isRequired = (required == "Y" || required == "y");
       addXMLComponentFields(pDoc, pComponentFieldNode.get(),
-                            msgtype, *this, isRequired);
+                            msgtype, DD , isRequired);
     }
     if(pComponentFieldNode->getName() == "group")
     {
@@ -578,7 +586,8 @@ void DataDictionary::addXMLGroup( DOMDocument* pDoc, DOMNode* pNode,
     {
       field = lookupXMLFieldNumber( pDoc, node.get() );
       groupDD.addField( field );
-
+      //this->addField(field);
+      //this->addMsgField(msgtype,field);
       DOMAttributesPtr attrs = node->getAttributes();
       std::string required;
       if( attrs->get("required", required)
@@ -596,6 +605,8 @@ void DataDictionary::addXMLGroup( DOMDocument* pDoc, DOMNode* pNode,
     {
       field = lookupXMLFieldNumber( pDoc, node.get() );
       groupDD.addField( field );
+      //this->addField(field);
+      //this->addMsgField(msgtype,field);
       DOMAttributesPtr attrs = node->getAttributes();
       std::string required;
       if( attrs->get("required", required )

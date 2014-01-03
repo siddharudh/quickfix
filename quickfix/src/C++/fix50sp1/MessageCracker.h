@@ -24,9 +24,9 @@
 
 #include "../SessionID.h"
 #include "../Exceptions.h"
-#include "../fix50/Message.h"
+#include "../fix50sp1/Message.h"
 
-namespace FIX50
+namespace FIX50SP1
 {  
   class IOI; 
   class Advertisement; 
