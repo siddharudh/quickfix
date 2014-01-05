@@ -160,6 +160,8 @@ throw( FIX::Exception )
     pSessionDD->iterate( message.getTrailer(), msgType );
   }
 
+//  std::cout << "DataDictionary::validate: message: " << message.toXML() << std::endl;
+//  std::cout << "--------------------------------" << std::endl;
   pAppDD->iterate( message, msgType );
 
   QF_STACK_POP
